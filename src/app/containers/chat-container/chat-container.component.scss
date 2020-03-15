@@ -1,0 +1,15 @@
+#chat-container {
+    width: 1000px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+
+    #chat-title {
+        margin: 0;
+    }
+
+    #chat {
+        display: block;
+        margin-top: 20px;
+    }
+}
