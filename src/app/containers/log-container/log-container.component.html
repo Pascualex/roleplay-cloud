@@ -1,0 +1,5 @@
+<div id="log-container">
+    <h1 id="title">{{log.title}}</h1>
+    <app-log-viewer id="log-viewer" [entries]="entries"></app-log-viewer>
+    <app-log-input id="log-input" (sendMessageEvent)="sendMessage($event)"></app-log-input>
+</div>

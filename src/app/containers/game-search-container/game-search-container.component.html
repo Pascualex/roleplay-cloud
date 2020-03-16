@@ -1,0 +1,8 @@
+<div id="game-search-container">
+    <h1 id="title">Roleplay Log</h1>
+    <div id="search-bar">
+        <input id="input" type="text" placeholder="Introduce the game ID" (change)="onChange($event)">
+        <a id="button" (click)="searchGame()">Search</a>
+        <p id="error" *ngIf="invalid">Invalid ID, it must be 20 characters long</p>
+    </div>
+</div>
