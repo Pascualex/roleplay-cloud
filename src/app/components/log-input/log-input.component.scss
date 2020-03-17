@@ -33,6 +33,7 @@
 
         .roll-menu {
             display: flex;
+            position: relative;
             width: 240px;
             padding: 0 10px;
             border-radius: 4px;
@@ -49,6 +50,17 @@
             .dice:hover {
                 background-color: #226628;
             }
+        }
+
+        .top-arrow:after {
+            content: ' ';
+            position: absolute;
+            top: -20px;
+            right: 30px;
+            width: 0;
+            height: 0;
+            border: 11px solid;
+            border-color: transparent transparent #2d8a36 transparent;
         }
     }
 }
