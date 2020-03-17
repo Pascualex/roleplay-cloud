@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { LogService } from 'src/app/services/log.service';
 import { Log } from 'src/app/models/Log';
-import { LogEntry, Timestamp } from 'src/app/models/LogEntry';
+import { LogEntry } from 'src/app/models/LogEntry';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -29,7 +29,6 @@ export class LogContainerComponent implements OnInit {
 
   public sendMessage(entry: LogEntry) {
     entry.author = this.name;
-    entry.timestamp = Timestamp.now();
     this.logService.sendEntry(this.logId, entry);
   }
 }

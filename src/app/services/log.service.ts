@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { firestore } from 'firebase/app';
 import { Observable, empty } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Log } from '../models/Log';
-import { LogEntry, Timestamp } from '../models/LogEntry';
+import { LogEntry } from '../models/LogEntry';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,7 @@ export class LogService {
   }
 
   public sendEntry(logId: string, entry: LogEntry): void {
+    entry.timestamp = firestore.FieldValue.serverTimestamp();
     const logDocument: AngularFirestoreDocument<Log> = this.logsCollection.doc(logId);
     if (logDocument != null) {
       const entriesCollection: AngularFirestoreCollection<LogEntry> = logDocument.collection('entries');
