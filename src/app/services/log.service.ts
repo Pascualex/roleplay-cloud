@@ -33,8 +33,8 @@ export class LogService {
     }
   }
 
-  public getEntries(log: Log): Observable<LogEntry[]> {
-    const logDocument: AngularFirestoreDocument<Log> = this.logsCollection.doc(log.id);
+  public getEntries(logId: string): Observable<LogEntry[]> {
+    const logDocument: AngularFirestoreDocument<Log> = this.logsCollection.doc(logId);
     if (logDocument != null) {
       const entriesCollection: AngularFirestoreCollection<LogEntry> = logDocument.collection(
         'entries',
@@ -46,8 +46,8 @@ export class LogService {
     }
   }
 
-  public sendEntry(log: Log, entry: LogEntry): void {
-    const logDocument: AngularFirestoreDocument<Log> = this.logsCollection.doc(log.id);
+  public sendEntry(logId: string, entry: LogEntry): void {
+    const logDocument: AngularFirestoreDocument<Log> = this.logsCollection.doc(logId);
     if (logDocument != null) {
       const entriesCollection: AngularFirestoreCollection<LogEntry> = logDocument.collection('entries');
       entriesCollection.add(entry);

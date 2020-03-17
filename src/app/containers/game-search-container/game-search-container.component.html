@@ -3,10 +3,14 @@
     <form class="search-bar" [formGroup]="formControl" (ngSubmit)="searchGame()">
         <input class="input" formControlName="gameId" placeholder="Introduce the game ID">
         <a class="button" (click)="searchGame()">Search</a>
-        <div *ngIf="formControl.get('gameId').invalid && formControl.get('gameId').touched">
+        <div *ngIf="formControl.get('gameId').invalid && searched">
             <p class="error" *ngIf="formControl.get('gameId').errors.required">Please, introduce the ID of the game you are searching</p>
             <p class="error" *ngIf="formControl.get('gameId').errors.minlength">ID too short, it must be 20 characters long</p>
             <p class="error" *ngIf="formControl.get('gameId').errors.maxlength">ID too long, it must be 20 characters long</p>
+        </div>
+        <input class="name-input" formControlName="name" placeholder="Write you name or be anonymous">
+        <div *ngIf="formControl.get('name').invalid && searched">
+            <p class="error" *ngIf="formControl.get('name').errors.maxlength">Name too long, it must have 20 or less characters</p>
         </div>
     </form>
 </div>

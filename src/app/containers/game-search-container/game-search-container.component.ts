@@ -9,10 +9,15 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class GameSearchContainerComponent implements OnInit {
 
+  public searched: boolean = false;
+
   public formControl: FormGroup = new FormGroup({
     gameId: new FormControl('', [
       Validators.required,
       Validators.minLength(20),
+      Validators.maxLength(20)
+    ]),    
+    name: new FormControl('', [
       Validators.maxLength(20)
     ])
   });
@@ -22,9 +27,19 @@ export class GameSearchContainerComponent implements OnInit {
   ngOnInit(): void { }
 
   public searchGame(): void {
+    this.searched = true;
     if (this.formControl.invalid) return;
 
     const gameId: string = this.formControl.get('gameId').value;
-    this.router.navigate(['/log/', gameId]);
+    const name: string = this.formControl.get('name').value;
+    if (name.length == 0) {
+      this.router.navigate(['/log/', gameId]);
+    } else {
+      this.router.navigate(['/log/', gameId], {
+        queryParams: {
+          name: name
+        }
+      });
+    }
   }
 } 

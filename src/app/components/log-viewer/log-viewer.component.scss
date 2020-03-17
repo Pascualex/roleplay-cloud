@@ -1,11 +1,18 @@
 .log-viewer {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
     height: 100%;
+    overflow: auto;
 
-    .log-entry {
-        display: block;
-        margin: 10px 100px 0 0;
+    .scrollable {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        min-height: 100%;
+
+        .log-entry {
+            display: block;
+            width: max-content;
+            max-width: 80%;
+            margin: 10px 0 0 0;
+        }
     }
 }

@@ -1,21 +1,54 @@
 .log-input {
-    display: flex;
     width: 100%;
 
-    .input {
+    .main-bar {
+        display: flex;
         width: 100%;
-        padding: 10px;
-        border: none;
-        border-radius: 4px 0 0 4px;
-        background-color: #141b1f;
-        font-size: 13pt;
-        color: white;
+
+        .input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #0b141a;
+            font-size: 13pt;
+            color: white;
+        }
+        
+        .roll-button {
+            width: 100px;
+            margin: 0 0 0 10px;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #2d8a36;
+            font-size: 13pt;
+            text-align: center;
+        }
     }
-    
-    .button {
-        padding: 10px;
-        border-radius: 0 4px 4px 0;
-        background-color: #00acc1;
-        font-size: 13pt;
+
+    .secondary-bar {
+        display: flex;
+        justify-content: flex-end;
+        margin: 10px 0 0 0;
+
+        .roll-menu {
+            display: flex;
+            width: 240px;
+            padding: 0 10px;
+            border-radius: 4px;
+            background-color: #2d8a36;
+            font-size: 12pt;
+            font-weight: bold;
+
+            .dice {
+                display: block;
+                padding: 10px 5px;
+                text-align: center;
+            }
+            
+            .dice:hover {
+                background-color: #226628;
+            }
+        }
     }
 }
