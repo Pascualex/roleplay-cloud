@@ -1,8 +1,8 @@
-#log-input {
+.log-input {
     display: flex;
     width: 100%;
-    
-    #input {
+
+    .input {
         width: 100%;
         padding: 10px;
         border: none;
@@ -12,7 +12,7 @@
         color: white;
     }
     
-    #button {
+    .button {
         padding: 10px;
         border-radius: 0 4px 4px 0;
         background-color: #00acc1;

@@ -1,4 +1,6 @@
-<div>
-    <p>[{{ entry.timestamp.toDate() | date:'H:MM:SS' }}]</p>
-    <p>{{ entry.message }}</p>
+<div class="log-entry left-arrow">
+    <p class="message">{{ entry.message }}</p>
+    <div class="timestamp-wrapper">
+        <p class="timestamp">{{ entry.timestamp.toDate() | date:'HH:mm' }}</p>
+    </div>
 </div>

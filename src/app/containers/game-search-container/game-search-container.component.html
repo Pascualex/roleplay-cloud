@@ -1,8 +1,12 @@
-<div id="game-search-container">
-    <h1 id="title">Roleplay Log</h1>
-    <div id="search-bar">
-        <input id="input" type="text" placeholder="Introduce the game ID" (change)="onChange($event)">
-        <a id="button" (click)="searchGame()">Search</a>
-        <p id="error" *ngIf="invalid">Invalid ID, it must be 20 characters long</p>
-    </div>
+<div class="game-search-container">
+    <h1 class="title">Roleplay Log</h1>
+    <form class="search-bar" [formGroup]="formControl" (ngSubmit)="searchGame()">
+        <input class="input" formControlName="gameId" placeholder="Introduce the game ID">
+        <a class="button" (click)="searchGame()">Search</a>
+        <div *ngIf="formControl.get('gameId').invalid && formControl.get('gameId').touched">
+            <p class="error" *ngIf="formControl.get('gameId').errors.required">Please, introduce the ID of the game you are searching</p>
+            <p class="error" *ngIf="formControl.get('gameId').errors.minlength">ID too short, it must be 20 characters long</p>
+            <p class="error" *ngIf="formControl.get('gameId').errors.maxlength">ID too long, it must be 20 characters long</p>
+        </div>
+    </form>
 </div>

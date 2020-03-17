@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-log-input',
@@ -10,21 +11,22 @@ export class LogInputComponent implements OnInit {
   @Output()
   public sendMessageEvent: EventEmitter<string> = new EventEmitter();
 
-  private message: string;
+  public formControl: FormGroup = new FormGroup({
+    message: new FormControl('', [
+      Validators.required
+    ])
+  });
 
   constructor() { }
 
   ngOnInit(): void { }
 
   public sendMessage(): void {
-    if (this.message != null && this.message.length <= 256) {
-      console.log("Manda: ", this.message);
-      this.sendMessageEvent.emit(this.message);
-    }
-  }
+    if (this.formControl.invalid) { return; }
+    
+    const message: string = this.formControl.get('message').value;
+    this.sendMessageEvent.emit(message);
 
-  public onChange(event: KeyboardEvent) {
-    this.message = (event.target as HTMLInputElement).value;
-    console.log("Actualiza: ", this.message);
+    this.formControl.get('message').setValue('');
   }
 }

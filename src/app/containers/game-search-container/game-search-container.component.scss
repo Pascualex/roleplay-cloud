@@ -1,16 +1,16 @@
-#game-search-container {
+.game-search-container {
     width: 1000px;
     max-width: 100%;
     margin: 0 auto;
     padding: 20px;
     text-align: center;
 
-    #title {
+    .title {
         font-size: 26pt;
     }
 
-    #search-bar {
-        #input {
+    .search-bar {
+        .input {
             width: 300px;
             max-width: 100%;
             margin: 20px 0 0 0;
@@ -20,14 +20,14 @@
             font-size: 13pt;
         }
 
-        #button {
+        .button {
             padding: 10px;
             border-radius: 0 4px 4px 0;
             background-color: #00acc1;
             font-size: 13pt;
         }
 
-        #error {
+        .error {
             margin: 5px 0 0 0;
             color: #ff2e55;
         }

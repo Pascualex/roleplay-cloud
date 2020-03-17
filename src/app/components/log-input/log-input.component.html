@@ -1,4 +1,4 @@
-<div id="log-input">
-    <input id="input" type="text" placeholder="Write your message" (change)="onChange($event)">
-    <a id="button" (click)="sendMessage()">Send</a>
-</div>
+<form class="log-input" [formGroup]="formControl" (ngSubmit)="sendMessage()">
+    <input class="input" type="text" placeholder="Write your message" formControlName="message">
+    <a class="button" (click)="sendMessage()">Send</a>
+</form>

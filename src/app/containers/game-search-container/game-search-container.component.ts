@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-game-search-container',
@@ -8,25 +9,22 @@ import { Router } from '@angular/router';
 })
 export class GameSearchContainerComponent implements OnInit {
 
-  public gameId: string = '';
-  public invalid: boolean = false;
+  public formControl: FormGroup = new FormGroup({
+    gameId: new FormControl('', [
+      Validators.required,
+      Validators.minLength(20),
+      Validators.maxLength(20)
+    ])
+  });
 
   constructor(private router: Router) { }
 
   ngOnInit(): void { }
 
   public searchGame(): void {
-    if (this.gameId != null && this.gameId.length == 20) {
-      this.router.navigate(['/log/', this.gameId]);
-    } else {
-      this.invalid = true;
-    }
-  }
+    if (this.formControl.invalid) return;
 
-  public onChange(event: KeyboardEvent) {
-    this.gameId = (event.target as HTMLInputElement).value;
-    if (this.gameId != null && this.gameId.length == 20) {
-      this.invalid = false;
-    }
+    const gameId: string = this.formControl.get('gameId').value;
+    this.router.navigate(['/log/', gameId]);
   }
 } 
