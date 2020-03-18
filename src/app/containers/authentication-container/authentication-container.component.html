@@ -1,0 +1,27 @@
+<app-image-card class="authentication-container">
+    <form class="authetication-form" [formGroup]="formControl" (ngSubmit)="login()">
+        <input class="submit" type="submit" value="Submit" tabindex="-1">
+        <div class="up">
+            <h1 class="title">LOGIN WITH YOUR ACCOUNT</h1>
+            <p class="field-hint" *ngIf="formControl.get('email').valid || !searched">EMAIL</p>
+            <ng-container *ngIf="formControl.get('email').invalid && searched">
+                <p class="field-hint error" *ngIf="formControl.get('email').errors.required">EMAIL - FIELD REQUIRED</p>
+                <p class="field-hint error" *ngIf="formControl.get('email').errors.email">EMAIL - INVALID DIRECTION</p>
+            </ng-container>
+            <input class="input" type="email" formControlName="email">
+            <p class="field-hint" *ngIf="formControl.get('password').valid || !searched">PASSWORD</p>
+            <ng-container *ngIf="formControl.get('password').invalid && searched">
+                <p class="field-hint error" *ngIf="formControl.get('password').errors.required">PASSWORD - FIELD REQUIRED</p>
+                <p class="field-hint error" *ngIf="formControl.get('password').errors.minlength">PASSWORD - 6 CHARACTERS MINIMUM</p>
+                <p class="field-hint error" *ngIf="formControl.get('password').errors.maxlength">PASSWORD - 20 CHARACTERS MINIMUM</p>
+                <p class="field-hint error" *ngIf="formControl.get('password').errors.noWhitespace">PASSWORD - NO WHITESPACE</p>
+            </ng-container>
+            <input class="input" type="password" formControlName="password">
+        </div>
+        <div class="down">
+            <p class="submit-hint" *ngIf="awaitingResponse">Checking credentials...</p>
+            <p class="submit-hint error" *ngIf="invalidCredentials">No user found with those credentials</p>
+            <a class="submit-button" (click)="login()">Login</a>
+        </div>
+    </form>
+</app-image-card>

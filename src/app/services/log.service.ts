@@ -22,16 +22,17 @@ export class LogService {
 
   public getLog(id: string): Observable<Log> {
     const logDocument: AngularFirestoreDocument<Log> = this.logsCollection.doc(id);
-    if (logDocument != null) {
-      return logDocument.valueChanges().pipe(
-        map((log: Log) => {
-          log.id = id;
-          return log;
-        })
-      );
-    } else {
-      return empty();
-    }
+    return logDocument.valueChanges().pipe(
+      map((log: Log) => {
+        log.id = id;
+        return log;
+      })
+    );
+  }
+
+  public async checkLogExists(id: string): Promise<boolean> {
+    const logDocument: AngularFirestoreDocument<Log> = this.logsCollection.doc(id);
+    return (await logDocument.get().toPromise()).exists;
   }
 
   public getEntries(logId: string): Observable<LogEntry[]> {

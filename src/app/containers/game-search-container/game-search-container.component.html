@@ -1,16 +1,20 @@
-<div class="game-search-container">
-    <h1 class="title">Roleplay Log</h1>
-    <form class="search-bar" [formGroup]="formControl" (ngSubmit)="searchGame()">
-        <input class="input" formControlName="gameId" placeholder="Introduce the game ID">
-        <a class="button" (click)="searchGame()">Search</a>
-        <div *ngIf="formControl.get('gameId').invalid && searched">
-            <p class="error" *ngIf="formControl.get('gameId').errors.required">Please, introduce the ID of the game you are searching</p>
-            <p class="error" *ngIf="formControl.get('gameId').errors.minlength">ID too short, it must be 20 characters long</p>
-            <p class="error" *ngIf="formControl.get('gameId').errors.maxlength">ID too long, it must be 20 characters long</p>
+<app-image-card class="game-search-container">
+    <form class="search-form" [formGroup]="formControl" (ngSubmit)="searchGame()">
+        <input class="submit" type="submit" value="Submit" tabindex="-1">
+        <div class="up">
+            <h1 class="title">SEARCH A GAME BY ID</h1>
+            <p class="field-hint" *ngIf="formControl.get('gameId').valid || !searched">GAME ID</p>
+            <ng-container *ngIf="formControl.get('gameId').invalid && searched">
+                <p class="field-hint error" *ngIf="formControl.get('gameId').errors.required">GAME ID - FIELD REQUIRED</p>
+                <p class="field-hint error" *ngIf="formControl.get('gameId').errors.minlength">GAME ID - 20 CHARACTERS MINIMUM</p>
+                <p class="field-hint error" *ngIf="formControl.get('gameId').errors.maxlength">GAME ID - 20 CHARACTERS MAXIMUM</p>
+            </ng-container>
+            <input class="input" type="email" formControlName="gameId">
         </div>
-        <input class="name-input" formControlName="name" placeholder="Write you name or be anonymous">
-        <div *ngIf="formControl.get('name').invalid && searched">
-            <p class="error" *ngIf="formControl.get('name').errors.maxlength">Name too long, it must have 20 or less characters</p>
+        <div class="down">
+            <p class="submit-hint" *ngIf="awaitingResponse">Searching game...</p>
+            <p class="submit-hint error" *ngIf="invalidGameId">No game found with the given id</p>
+            <a class="submit-button" (click)="searchGame()">Search</a>
         </div>
     </form>
-</div>
+</app-image-card>

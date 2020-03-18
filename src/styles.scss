@@ -48,3 +48,9 @@ h5 {
 p {
     margin: 0;
 }
+
+.shadow-box {
+    border-radius: 4px;
+    box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.30);
+    background-color: #292e33;
+}

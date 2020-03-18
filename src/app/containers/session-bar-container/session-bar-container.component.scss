@@ -1,0 +1,36 @@
+.session-bar-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 800px;
+    max-width: 100%;
+
+    .wrapper {
+        display: flex;
+
+        .user-data {
+            padding: 12px 20px 15px 15px;
+            text-align: right;
+    
+            .username {
+                font-size: 12pt;
+                font-weight: bold;
+            }
+        
+            .email {
+                font-size: 10pt;
+                color: #8f8f8f;
+            }
+        }
+    
+        .logout-button {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 0 4px 4px 0;
+            background: linear-gradient(150deg, rgba(255,99,0,1) 0%, rgba(255,152,0,1) 100%);
+            text-align: center;
+            color: #292e33;
+        }
+    } 
+}

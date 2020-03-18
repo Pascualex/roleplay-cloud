@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // Firebase
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,11 @@ import { LogViewerComponent } from './components/log-viewer/log-viewer.component
 import { LogEntryComponent } from './components/log-entry/log-entry.component';
 import { HomeViewComponent } from './views/home-view/home-view.component';
 import { GameSearchContainerComponent } from './containers/game-search-container/game-search-container.component';
+import { AuthenticationViewComponent } from './views/authentication-view/authentication-view.component';
+import { AuthenticationContainerComponent } from './containers/authentication-container/authentication-container.component';
+import { SearchViewComponent } from './views/search-view/search-view.component';
+import { SessionBarContainerComponent } from './containers/session-bar-container/session-bar-container.component';
+import { ImageCardComponent } from './components/image-card/image-card.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBcqC1jzBRzSyN7u6P8hG7RvmlI88gEM5M",
@@ -35,7 +41,12 @@ const firebaseConfig = {
     LogViewerComponent,
     LogEntryComponent,
     HomeViewComponent,
-    GameSearchContainerComponent
+    GameSearchContainerComponent,
+    AuthenticationViewComponent,
+    AuthenticationContainerComponent,
+    SearchViewComponent,
+    SessionBarContainerComponent,
+    ImageCardComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +54,8 @@ const firebaseConfig = {
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
