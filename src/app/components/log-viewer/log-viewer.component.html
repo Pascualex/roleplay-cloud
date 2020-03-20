@@ -3,6 +3,7 @@
         <app-log-entry
             class="log-entry"
             [entry]="entry"
+            [reverse]="entry.author.uid == user.uid"
             *ngFor="let entry of log.entries"
             #logEntry>            
         </app-log-entry>

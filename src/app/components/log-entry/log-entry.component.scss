@@ -1,58 +1,66 @@
 .log-entry {
-    position: relative;
-    margin: 0 0 0 10px;
-    padding: 5px 10px;
-    border-radius: 0 4px 4px 4px;
-    overflow-wrap: break-word;
-    background-color: #997232;
+    display: flex;
 
-    .top-bar {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
+    .box {
+        position: relative;
+        width: max-content;
+        max-width: 80%;
+        margin: 0 0 0 10px;
+        padding: 5px 10px;
+        border-radius: 0 4px 4px 4px;
+        overflow-wrap: break-word;
+        background-color: #997232;
 
-        .name {
-            font-size: 8pt;
-            font-weight: bold;
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+    
+            .name {
+                font-size: 8pt;
+                font-weight: bold;
+            }
+    
+            .timestamp {
+                margin-left: 10px;
+                font-size: 8pt;
+            }
         }
+    }
 
-        .timestamp {
-            margin-left: 10px;
-            font-size: 8pt;
-        }
+    .arrow:after {
+        content: ' ';
+        position: absolute;
+        top: 0px;
+        left: -10px;
+        width: 0;
+        height: 0;
+        border: 11px solid;
+        border-color: #997232 transparent transparent transparent;
+    }
+    
+    .arrow.roll:after {
+        border-color: #2d8a36 transparent transparent transparent;
+    }
+    
+    .arrow.roll:after {
+        border-color: #2d8a36 transparent transparent transparent;
+    }
+    
+    .box.roll {
+        background-color: #2d8a36;
     }
 }
 
-.left-arrow:after {
-    content: ' ';
-    position: absolute;
-    top: 0px;
-    left: -10px;
-    width: 0;
-    height: 0;
-    border: 11px solid;
-    border-color: #997232 transparent transparent transparent;
-}
+.log-entry.reverse {
+    justify-content: flex-end;
 
-.right-arrow:after {
-    content: ' ';
-    position: absolute;
-    top: 0px;
-    right: -10px;
-    width: 0;
-    height: 0;
-    border: 11px solid;
-    border-color: #997232 transparent transparent transparent;
-}
+    .box {        
+        margin: 0 15px 0 0;
+    }
 
-.log-entry.roll {
-    background-color: #2d8a36;
-}
-
-.roll:after {
-    border-color: #2d8a36 transparent transparent transparent;
-}
-
-.roll:after {
-    border-color: #2d8a36 transparent transparent transparent;
+    .arrow:after {
+        left: unset;
+        right: -10px;
+    }
 }
