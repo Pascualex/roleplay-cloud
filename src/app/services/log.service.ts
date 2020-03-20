@@ -5,6 +5,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { Log } from 'src/app/models/Log';
 import { LogEntry } from 'src/app/models/LogEntry';
 import { User } from 'src/app/models/User';
+import { firestore } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -35,13 +36,18 @@ export class LogService {
 
   private addEntriesToLog(log: Log): Observable<Log> {
     const logDocument: AngularFirestoreDocument<any> = this.logsCollection.doc(log.id);
-    return logDocument.collection('entries', ref => ref.orderBy('timestamp')).valueChanges().pipe(
+    const entriesCollection: AngularFirestoreCollection<any> = logDocument.collection(
+      'entries',
+      ref => ref.orderBy('timestamp')
+    );
+    return entriesCollection.valueChanges().pipe(
       // Transforms RawLogEntry[] to LogEntry[]
       switchMap((rawEntries) => {
         return this.rawLogEntriesToLogEntries(rawEntries);
       }),
       map((entries: LogEntry[]) => {
         log.entries = entries;
+        console.log('new entries')
         return log;
       })
     );
@@ -68,10 +74,15 @@ export class LogService {
         const userByUid: Map<string, User> = new Map<string, User>();
         users.forEach((user: User) => userByUid[user.uid] = user);
         return rawEntries.map((rawEntry) => {
+          const timestamp: Date = (
+            rawEntry.timestamp != null ?
+            rawEntry.timestamp.toDate() :
+            new Date(500000000000)
+          );
           return new LogEntry(
             rawEntry.message,
             rawEntry.type,
-            rawEntry.timestamp.toDate(),
+            timestamp,
             userByUid[rawEntry.uid]
           );
         });
@@ -84,11 +95,14 @@ export class LogService {
     return (await logDocument.get().toPromise()).exists;
   }
 
-  public sendEntry(logId: string, entry: LogEntry): void {
-    const logDocument: AngularFirestoreDocument<Log> = this.logsCollection.doc(logId);
-    if (logDocument != null) {
-      const entriesCollection: AngularFirestoreCollection<LogEntry> = logDocument.collection('entries');
-      entriesCollection.add(entry);
-    }
+  public sendEntry(log: Log, entry: LogEntry): void {
+    const logDocument: AngularFirestoreDocument<any> = this.logsCollection.doc(log.id);
+    const entriesCollection: AngularFirestoreCollection<any> = logDocument.collection('entries');
+    entriesCollection.add({
+      message: entry.message,
+      type: entry.type,
+      timestamp: firestore.FieldValue.serverTimestamp(),
+      uid: entry.author.uid
+    });
   }
 }

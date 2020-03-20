@@ -4,8 +4,13 @@ export class LogEntry {
 
   constructor(
     public message: string,
-    public type: number,
-    public timestamp: Date,
+    public type: LogEntryType,
+    public timestamp: Date = null,
     public author: User = null
   ) { }
+};
+
+export enum LogEntryType {
+  message = 0,
+  roll = 1
 };

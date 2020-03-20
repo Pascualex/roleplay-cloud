@@ -1,4 +1,4 @@
-<div class="log-entry" [class.roll]="entry.type == 1" [class.left-arrow]="!reverse" [class.right-arrow]="reverse">
+<div class="log-entry" [class.roll]="entry.type == roll" [class.left-arrow]="!reverse" [class.right-arrow]="reverse">
     <div class="top-bar">
         <p class="name">{{ entry.author.username }}</p>
         <p class="timestamp">{{ entry.timestamp | date:'HH:mm' }}</p>

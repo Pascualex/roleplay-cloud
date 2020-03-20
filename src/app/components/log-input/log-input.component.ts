@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { LogEntry } from 'src/app/models/LogEntry';
+import { LogEntry, LogEntryType } from 'src/app/models/LogEntry';
 
 @Component({
   selector: 'app-log-input',
@@ -29,7 +29,7 @@ export class LogInputComponent implements OnInit {
     
     const message: string = this.formControl.get('message').value;
     
-    const entry: LogEntry = { message, type: 0, author: null, timestamp: null };
+    const entry: LogEntry = new LogEntry(message, LogEntryType.message);
     this.sendMessageEvent.emit(entry);
 
     this.formControl.get('message').setValue('');
@@ -41,7 +41,7 @@ export class LogInputComponent implements OnInit {
     const result: number = Math.floor(Math.random() * faces) + 1;    
     const message: string = result + " / D" + faces;
 
-    const entry: LogEntry = { message, type: 1, author: null, timestamp: null };
+    const entry: LogEntry = new LogEntry(message, LogEntryType.roll);
     this.sendMessageEvent.emit(entry);
 
     this.rolling = false;

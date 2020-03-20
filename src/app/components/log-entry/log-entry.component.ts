@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { LogEntry } from 'src/app/models/LogEntry';
+import { LogEntry, LogEntryType } from 'src/app/models/LogEntry';
 
 @Component({
   selector: 'app-log-entry',
@@ -13,6 +13,8 @@ export class LogEntryComponent implements OnInit {
 
   @Input()
   public reverse: boolean = false;
+
+  public roll = LogEntryType.roll;
 
   constructor() { }
 
