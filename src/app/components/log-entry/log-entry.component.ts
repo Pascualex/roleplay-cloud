@@ -11,6 +11,9 @@ export class LogEntryComponent implements OnInit {
   @Input()
   public entry: LogEntry;
 
+  @Input()
+  public reverse: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void { }

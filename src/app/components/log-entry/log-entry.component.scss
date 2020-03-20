@@ -34,10 +34,25 @@
     border-color: #997232 transparent transparent transparent;
 }
 
+.right-arrow:after {
+    content: ' ';
+    position: absolute;
+    top: 0px;
+    right: -10px;
+    width: 0;
+    height: 0;
+    border: 11px solid;
+    border-color: #997232 transparent transparent transparent;
+}
+
 .log-entry.roll {
     background-color: #2d8a36;
 }
 
-.left-arrow.roll:after {
+.roll:after {
+    border-color: #2d8a36 transparent transparent transparent;
+}
+
+.roll:after {
     border-color: #2d8a36 transparent transparent transparent;
 }

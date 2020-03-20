@@ -6,12 +6,15 @@
     </div>
     <div class="secondary-bar" *ngIf="rolling">
         <div class="roll-menu top-arrow">
+            <a class="dice" (click)="sendRoll(2)">D2</a>
             <a class="dice" (click)="sendRoll(3)">D3</a>
             <a class="dice" (click)="sendRoll(4)">D4</a>
             <a class="dice" (click)="sendRoll(6)">D6</a>
+            <a class="dice" (click)="sendRoll(8)">D8</a>
             <a class="dice" (click)="sendRoll(10)">D10</a>
             <a class="dice" (click)="sendRoll(12)">D12</a>
+            <a class="dice" (click)="sendRoll(20)">D20</a>
             <a class="dice" (click)="sendRoll(100)">D100</a>
         </div>
-    </div>
+    </div>  
 </form>

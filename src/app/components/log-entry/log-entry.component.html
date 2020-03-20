@@ -1,7 +1,7 @@
-<div class="log-entry left-arrow" [class.roll]="entry.type == 1">
+<div class="log-entry" [class.roll]="entry.type == 1" [class.left-arrow]="!reverse" [class.right-arrow]="reverse">
     <div class="top-bar">
-        <p class="name">{{ entry.author }}</p>
-        <p class="timestamp">{{ entry.timestamp.toDate() | date:'HH:mm' }}</p>
+        <p class="name">{{ entry.author.username }}</p>
+        <p class="timestamp">{{ entry.timestamp | date:'HH:mm' }}</p>
     </div>
     <p class="message">{{ entry.message }}</p>
 </div>

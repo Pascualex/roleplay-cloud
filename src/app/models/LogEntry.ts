@@ -1,7 +1,11 @@
+import { User } from './User';
 
-export interface LogEntry {
-    message: string,
-    type: number,
-    author: string,
-    timestamp: any;
+export class LogEntry {
+
+  constructor(
+    public message: string,
+    public type: number,
+    public timestamp: Date,
+    public author: User = null
+  ) { }
 };

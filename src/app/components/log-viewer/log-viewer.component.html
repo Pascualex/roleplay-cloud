@@ -1,6 +1,10 @@
 <div class="log-viewer" #logViewer>
     <div class="scrollable">
-        <app-log-entry class="log-entry" [entry]="entry" *ngFor="let entry of entries" #logEntry>            
+        <app-log-entry
+            class="log-entry"
+            [entry]="entry"
+            *ngFor="let entry of log.entries"
+            #logEntry>            
         </app-log-entry>
     </div>
 </div>

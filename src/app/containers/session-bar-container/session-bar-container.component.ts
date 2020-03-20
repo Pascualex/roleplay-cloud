@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import { User } from 'firebase';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-session-bar-container',
@@ -15,7 +15,7 @@ export class SessionBarContainerComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    this.authService.getUser().subscribe((user: User) => {
+    this.authService.getCurrentUser().subscribe((user: User) => {
       this.user = user;
     });
   }

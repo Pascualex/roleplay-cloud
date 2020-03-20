@@ -2,9 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { LogService } from 'src/app/services/log.service';
 import { Log } from 'src/app/models/Log';
 import { LogEntry } from 'src/app/models/LogEntry';
-import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { User } from 'firebase';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-log-container',
@@ -17,23 +16,21 @@ export class LogContainerComponent implements OnInit {
   public logId: string;
 
   public log: Log;
-  public entries: LogEntry[];
-
-  private name: string = 'uninitialized';
+  public user: User;
 
   constructor(private logService: LogService, private authService: AuthService) {
-    this.authService.getUser().subscribe((user: User) => {
-      this.name = user.email.split("@")[0];
+    this.authService.getCurrentUser().subscribe((user: User) => {
+      this.user = user;
     });
   }
 
   ngOnInit() {
     this.logService.getLog(this.logId).subscribe((log: Log) => this.log = log);
-    this.logService.getEntries(this.logId).subscribe((entries: LogEntry[]) => this.entries = entries);
   }
 
   public async sendMessage(entry: LogEntry) {
-    entry.author = this.name;
+    if (this.user == null) return;
+    entry.author = this.user;
     this.logService.sendEntry(this.logId, entry);
   }
 }

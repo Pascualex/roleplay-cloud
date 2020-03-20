@@ -1,8 +1,7 @@
 <div class="session-bar-container" *ngIf="user != null">
     <div class="wrapper shadow-box">
         <div class="user-data">
-            <p class="username">{{ this.user.displayName }}</p>
-            <p class="email">{{ this.user.email }}</p>
+            <p class="username">{{ this.user.username }}</p>
         </div>
         <a class="logout-button" (click)="logout()">Logout</a>
     </div>

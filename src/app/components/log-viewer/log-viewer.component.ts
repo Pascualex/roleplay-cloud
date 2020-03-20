@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewChecked, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
+import { Log } from 'src/app/models/Log';
 import { LogEntry } from 'src/app/models/LogEntry';
 import { Observable } from 'rxjs';
+import { User } from 'firebase';
 
 @Component({
   selector: 'app-log-viewer',
@@ -10,7 +12,10 @@ import { Observable } from 'rxjs';
 export class LogViewerComponent implements OnInit, AfterViewInit {
 
   @Input()
-  public entries: LogEntry[];
+  public log: Log;
+
+  @Input()
+  public user: User;
 
   @ViewChild('logViewer')
   private logViewer: ElementRef;

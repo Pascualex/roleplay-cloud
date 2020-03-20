@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
-import { User } from 'firebase';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { User } from 'src/app/models/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private afa: AngularFireAuth) { }
+  private usersCollection: AngularFirestoreCollection<any>;
+
+  constructor(private afa: AngularFireAuth, private afs: AngularFirestore) {
+    this.usersCollection = this.afs.collection('users');
+  }
 
   public async login(email: string, password: string): Promise<boolean> {
     return await this.afa.auth.signInWithEmailAndPassword(email, password).then(
@@ -45,11 +50,23 @@ export class AuthService {
 
   public isLoggedIn(): Observable<boolean> {
     return this.afa.authState.pipe(
-      map((user: User) => user == null)
+      map((authUser) => authUser == null)
     );
   }
 
-  public getUser(): Observable<User> {
-    return this.afa.authState;
+  public getCurrentUser(): Observable<User> {
+    return this.afa.authState.pipe(
+      // AuthUser to RawUserSnapshot
+      switchMap((authUser) => {
+        const userDocument: AngularFirestoreDocument<any> = this.usersCollection.doc(authUser.uid);
+        return userDocument.snapshotChanges();
+      }),
+      map((rawUserSnapshot) => {
+        return new User(
+          rawUserSnapshot.payload.id,
+          rawUserSnapshot.payload.data().username
+        );
+      })
+    );
   }
 }
