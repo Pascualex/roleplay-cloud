@@ -3,37 +3,52 @@ import { auth } from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { User } from 'src/app/models/User';
+import { UserService } from './user.service';
+
+export enum RegisterResponse {
+  OK,
+  EMAIL_COLLISION,
+  UNKNOWN
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private usersCollection: AngularFirestoreCollection<any>;
-
-  constructor(private afa: AngularFireAuth, private afs: AngularFirestore) {
-    this.usersCollection = this.afs.collection('users');
-  }
+  constructor(private afa: AngularFireAuth, private userService: UserService) { }
 
   public async login(email: string, password: string): Promise<boolean> {
-    return await this.afa.auth.signInWithEmailAndPassword(email, password).then(
+    return this.afa.auth.signInWithEmailAndPassword(email, password).then(
       _ => true,
       _ => false
     );
   }
 
   public async loginWithGoogle(): Promise<boolean> {
-    return await this.afa.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(
+    return this.afa.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(
       _ => true,
       _ => false
     );
   }
 
-  public async register(email: string, password: string): Promise<void> {
-    await this.afa.auth.createUserWithEmailAndPassword(email, password);
-    this.sendEmailVerification();
+  public async register(email: string, password: string, user: User): Promise<RegisterResponse> {
+    return this.afa.auth.createUserWithEmailAndPassword(email, password).then(
+      (authUser: firebase.auth.UserCredential) => {
+        user.uid = authUser.user.uid;
+        this.userService.addUser(user);
+        this.sendEmailVerification();
+        return RegisterResponse.OK;
+      },
+      (error) => {
+        if (error.code == 'auth/email-already-in-use') {
+          return RegisterResponse.EMAIL_COLLISION;
+        } else {
+          return RegisterResponse.UNKNOWN;
+        }
+      }
+    );     
   }
 
   public async sendEmailVerification(): Promise<void> {
@@ -50,23 +65,14 @@ export class AuthService {
 
   public isLoggedIn(): Observable<boolean> {
     return this.afa.authState.pipe(
-      map((authUser) => authUser == null)
+      map((authUser: firebase.User) => authUser == null)
     );
   }
 
   public getCurrentUser(): Observable<User> {
     return this.afa.authState.pipe(
-      // AuthUser to RawUserSnapshot
-      switchMap((authUser) => {
-        const userDocument: AngularFirestoreDocument<any> = this.usersCollection.doc(authUser.uid);
-        return userDocument.snapshotChanges();
-      }),
-      map((rawUserSnapshot) => {
-        return new User(
-          rawUserSnapshot.payload.id,
-          rawUserSnapshot.payload.data().username
-        );
-      })
+      // AuthUser to User
+      switchMap((authUser: firebase.User) => this.userService.getUser(authUser.uid))
     );
   }
 }

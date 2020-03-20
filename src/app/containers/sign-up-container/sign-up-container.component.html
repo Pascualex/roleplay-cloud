@@ -1,0 +1,65 @@
+<app-image-card class="sign-up-container">
+    <form class="sign-up-form" [formGroup]="formControl" (ngSubmit)="signUp()">
+        <input class="submit" type="submit" value="Submit" tabindex="-1">
+        <div class="up">
+            <h1 class="title">SIGN UP</h1>
+            <p class="field-hint" *ngIf="formControl.get('email').valid || !attempted">EMAIL</p>
+            <ng-container *ngIf="formControl.get('email').invalid && attempted">
+                <p class="field-hint error" *ngIf="formControl.get('email').errors.required">EMAIL - FIELD REQUIRED</p>
+                <p class="field-hint error" *ngIf="formControl.get('email').errors.email">EMAIL - INVALID DIRECTION</p>
+            </ng-container>
+            <input class="input" type="email" formControlName="email">
+            <p class="field-hint" *ngIf="formControl.get('username').valid || !attempted">USERNAME</p>
+            <ng-container *ngIf="formControl.get('username').invalid && attempted">
+                <p class="field-hint error" *ngIf="formControl.get('username').errors.required">USERNAME - FIELD REQUIRED</p>
+                <p class="field-hint error" *ngIf="formControl.get('username').errors.minlength">USERNAME - 4 CHARACTERS MINIMUM</p>
+                <p class="field-hint error" *ngIf="formControl.get('username').errors.maxlength">USERNAME - 16 CHARACTERS MINIMUM</p>
+                <p class="field-hint error" *ngIf="formControl.get('username').errors.nowhitespace">USERNAME - NO WHITESPACE ALLOWED</p>
+            </ng-container>
+            <input class="input" type="username" formControlName="username">
+            <p class="field-hint" *ngIf="formControl.get('password').valid || !attempted">PASSWORD</p>
+            <ng-container *ngIf="formControl.get('password').invalid && attempted">
+                <p class="field-hint error" *ngIf="formControl.get('password').errors.required">PASSWORD - FIELD REQUIRED</p>
+                <p class="field-hint error" *ngIf="formControl.get('password').errors.minlength">PASSWORD - 6 CHARACTERS MINIMUM</p>
+                <p class="field-hint error" *ngIf="formControl.get('password').errors.maxlength">PASSWORD - 20 CHARACTERS MINIMUM</p>
+                <p class="field-hint error"
+                    *ngIf="
+                        formControl.get('password').errors.nowhitespace
+                        && !formControl.get('password').errors.minlength
+                        && !formControl.get('password').errors.maxlength
+                    ">PASSWORD - NO WHITESPACE ALLOWED</p>
+            </ng-container>
+            <input class="input" type="password" formControlName="password">
+            <p class="field-hint" *ngIf="formControl.get('confirmPassword').valid || !attempted">CONFIRM PASSWORD</p>
+            <ng-container *ngIf="formControl.get('confirmPassword').invalid && attempted">
+                <p class="field-hint error" *ngIf="formControl.get('confirmPassword').errors.required">CONFIRM PASSWORD - FIELD REQUIRED</p>
+                <p class="field-hint error" *ngIf="formControl.get('confirmPassword').errors.minlength">CONFIRM PASSWORD - 6 CHARACTERS MINIMUM</p>
+                <p class="field-hint error" *ngIf="formControl.get('confirmPassword').errors.maxlength">CONFIRM PASSWORD - 20 CHARACTERS MINIMUM</p>
+                <p class="field-hint error"
+                    *ngIf="
+                        formControl.get('confirmPassword').errors.nowhitespace
+                        && !formControl.get('confirmPassword').errors.minlength
+                        && !formControl.get('confirmPassword').errors.maxlength
+                    ">CONFIRM PASSWORD - NO WHITESPACE ALLOWED</p>
+                <p class="field-hint error"
+                    *ngIf="
+                        formControl.get('confirmPassword').errors.matches
+                        && !formControl.get('confirmPassword').errors.required
+                        && !formControl.get('confirmPassword').errors.minlength
+                        && !formControl.get('confirmPassword').errors.maxlength
+                        && !formControl.get('confirmPassword').errors.nowhitespace
+                    ">CONFIRM PASSWORD - PASSWORDS DOESN'T MATCH</p>
+            </ng-container>
+            <input class="input" type="password" formControlName="confirmPassword">
+            <a class="link" (click)="switchToLogin()">Already have an account? Login!</a> 
+        </div>
+        <div class="down">
+            <p class="submit-hint" *ngIf="!awaitingResponse && !invalidEmail && !unexpectedError"><br/></p>
+            <p class="submit-hint" *ngIf="!created && awaitingResponse">Checking credentials...</p>
+            <p class="submit-hint ok" *ngIf="created">Account registered! Logging in...</p>
+            <p class="submit-hint error" *ngIf="invalidEmail">Email already in use</p>
+            <p class="submit-hint error" *ngIf="unexpectedError">Unexpected error</p>
+            <a class="submit-button" (click)="signUp()">Sign Up</a>
+        </div>
+    </form>
+</app-image-card>

@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidators } from '../../validators/CustomValidators';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-authentication-container',
-  templateUrl: './authentication-container.component.html',
-  styleUrls: ['./authentication-container.component.scss']
+  selector: 'app-login-container',
+  templateUrl: './login-container.component.html',
+  styleUrls: ['./login-container.component.scss']
 })
-export class AuthenticationContainerComponent implements OnInit {
+export class LoginContainerComponent implements OnInit {
 
-  public searched: boolean = false;
+  @Output()
+  public switchToSignUpEvent: EventEmitter<void> = new EventEmitter();
+
+  public attempted: boolean = false;
   public awaitingResponse: boolean = false;
   public invalidCredentials: boolean = false;
 
@@ -37,9 +40,11 @@ export class AuthenticationContainerComponent implements OnInit {
   ngOnInit(): void { }
 
   public async login(): Promise<void> {
-    this.searched = true;
+    this.attempted = true;
+
     if (this.formControl.invalid) return;
     if (this.awaitingResponse || this.invalidCredentials) return;
+
     this.awaitingResponse = true;
 
     const email: string = this.formControl.get('email').value;
@@ -48,8 +53,13 @@ export class AuthenticationContainerComponent implements OnInit {
     if (await this.authService.login(email, password)) {
       this.router.navigate(['home']);
     } else {
-      this.awaitingResponse = false;
       this.invalidCredentials = true;
     }
+    
+    this.awaitingResponse = false;
+  }
+
+  public switchToSignUp(): void {
+    this.switchToSignUpEvent.emit();
   }
 }

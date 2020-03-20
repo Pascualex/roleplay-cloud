@@ -5,8 +5,8 @@ export class Log {
   public static readonly dummy = new Log('', '', []);
 
   constructor(
-    public id: string,
     public title: string,
-    public entries: LogEntry[] = []
+    public id: string,
+    public entries: LogEntry[] = [],
   ) { }
 };

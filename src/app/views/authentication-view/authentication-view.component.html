@@ -1,3 +1,4 @@
 <div class="authentication-view">
-    <app-authentication-container class="authentication-container"></app-authentication-container>
+    <app-login-container *ngIf="!signUp" (switchToSignUpEvent)="signUp = true"></app-login-container>
+    <app-sign-up-container *ngIf="signUp" (switchToLoginEvent)="signUp = false"></app-sign-up-container>
 </div>

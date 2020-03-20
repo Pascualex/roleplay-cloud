@@ -1,23 +1,21 @@
-.authentication-container {
+.login-container {
     display: block;
     width: 800px;
     max-width: 100%;
-    height: 400px;
 
-    .authetication-form {
+    .login-form {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         width: 100%;
-        height: 100%;
-
+    
         .submit {
             display: none;
         }
-
+    
         .up {
             width: 100%;
-
+    
             .title {
                 margin: 0 0 30px 0;
                 font-size: 14pt;
@@ -46,12 +44,25 @@
         
             .input:focus {
                 border-color: #e06200;
-            }   
-        }
+            }
 
+            .link {
+                display: block;
+                width: fit-content;
+                margin: 15px 0 0 0;
+                font-size: 12px;         
+                font-weight: bold;       
+            }
+            
+            .link:hover {
+                text-decoration: underline;
+            }
+        }
+    
         .down {
             width: 100%;
-
+            padding: 40px 0 0 0;
+    
             .submit-hint {
                 margin: 0 0 10px 0;
                 font-size: 12px;
@@ -65,7 +76,7 @@
             .submit-hint.error {
                 color: #e83a3a;
             }
-
+    
             .submit-button {
                 display: block;
                 width: 100%;
@@ -76,12 +87,5 @@
                 color: #292e33;
             }
         }
-    }
-
-    .image {
-        width: 40%;
-        height: 100%;
-        background: linear-gradient(132deg, rgba(255,99,0,1) 0%, rgba(255,152,0,1) 100%);
-        border-radius: 0 4px 4px 0;
     }
 }

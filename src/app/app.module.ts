@@ -17,10 +17,11 @@ import { LogEntryComponent } from './components/log-entry/log-entry.component';
 import { HomeViewComponent } from './views/home-view/home-view.component';
 import { GameSearchContainerComponent } from './containers/game-search-container/game-search-container.component';
 import { AuthenticationViewComponent } from './views/authentication-view/authentication-view.component';
-import { AuthenticationContainerComponent } from './containers/authentication-container/authentication-container.component';
 import { SearchViewComponent } from './views/search-view/search-view.component';
 import { SessionBarContainerComponent } from './containers/session-bar-container/session-bar-container.component';
 import { ImageCardComponent } from './components/image-card/image-card.component';
+import { LoginContainerComponent } from './containers/login-container/login-container.component';
+import { SignUpContainerComponent } from './containers/sign-up-container/sign-up-container.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBcqC1jzBRzSyN7u6P8hG7RvmlI88gEM5M",
@@ -43,10 +44,11 @@ const firebaseConfig = {
     HomeViewComponent,
     GameSearchContainerComponent,
     AuthenticationViewComponent,
-    AuthenticationContainerComponent,
     SearchViewComponent,
     SessionBarContainerComponent,
-    ImageCardComponent
+    ImageCardComponent,
+    LoginContainerComponent,
+    SignUpContainerComponent
   ],
   imports: [
     BrowserModule,
