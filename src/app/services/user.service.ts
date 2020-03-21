@@ -19,10 +19,14 @@ export class UserService {
     const userDocument: AngularFirestoreDocument<any> = this.usersCollection.doc(uid);
     return userDocument.snapshotChanges().pipe(
       map((rawUserSnapshot) => {
-        return new User(
-          rawUserSnapshot.payload.data().username,
-          rawUserSnapshot.payload.id
-        );
+        if (rawUserSnapshot.payload.exists) {
+          return new User(
+            rawUserSnapshot.payload.data().username,
+            rawUserSnapshot.payload.id
+          );
+        } else {
+          return null;
+        }
       })
     );
   }

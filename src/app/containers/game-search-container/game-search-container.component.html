@@ -12,6 +12,7 @@
             <input class="input" type="email" formControlName="gameId">
         </div>
         <div class="down">
+            <p class="submit-hint" *ngIf="!awaitingResponse && !invalidGameId"><br/></p>
             <p class="submit-hint" *ngIf="awaitingResponse">Searching game...</p>
             <p class="submit-hint error" *ngIf="invalidGameId">No game found with the given id</p>
             <a class="submit-button" (click)="searchGame()">Search</a>

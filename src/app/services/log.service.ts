@@ -56,7 +56,11 @@ export class LogService {
     const uids: string[] = Array.from(new Set(rawEntries.map(rawEntry => rawEntry.uid)));
     // Transforms uids to users
     const users: Observable<User>[] = uids.map((uid: string) => {
-      return this.userService.getUser(uid);
+      return this.userService.getUser(uid).pipe(
+        map((user: User) => {
+          return (user != null ? user : new User('user-removed', uid));
+        })
+      );
     });
     // Maps each rawEntry to its user and transforms it to LogEntry
     return (users.length > 0 ? combineLatest(users) : of([])).pipe(

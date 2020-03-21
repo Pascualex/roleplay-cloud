@@ -81,7 +81,7 @@ export class SignUpContainerComponent implements OnInit {
       this.created = true;
 
       if (await this.authService.login(email, password)) {
-        this.router.navigate(['search']);
+        this.router.navigate(['home']);
       } else {
         this.created = false;
         this.unexpectedError = true;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { User } from 'src/app/models/User';
 import { UserService } from './user.service';
@@ -33,13 +33,21 @@ export class AuthService {
     );
   }
 
-  public async register(email: string, password: string, user: User): Promise<RegisterResponse> {
+  public register(email: string, password: string, user: User): Promise<RegisterResponse> {
     return this.afa.auth.createUserWithEmailAndPassword(email, password).then(
       (authUser: firebase.auth.UserCredential) => {
         user.uid = authUser.user.uid;
-        this.userService.addUser(user);
-        this.sendEmailVerification();
-        return RegisterResponse.OK;
+        // this.sendEmailVerification();
+        return this.userService.addUser(user).then(
+          _ => {
+            console.log("añadido con id:", user.uid)
+            return RegisterResponse.OK
+          },
+          _ => {
+            console.log("no añadido con id:", user.uid)
+            return RegisterResponse.UNKNOWN
+          }
+        );  
       },
       (error) => {
         if (error.code == 'auth/email-already-in-use') {
@@ -65,14 +73,20 @@ export class AuthService {
 
   public isLoggedIn(): Observable<boolean> {
     return this.afa.authState.pipe(
-      map((authUser: firebase.User) => authUser == null)
+      map((authUser: firebase.User) => authUser != null)
     );
   }
 
   public getCurrentUser(): Observable<User> {
     return this.afa.authState.pipe(
       // AuthUser to User
-      switchMap((authUser: firebase.User) => this.userService.getUser(authUser.uid))
+      switchMap((authUser: firebase.User) => {
+        if (authUser != null) {
+          return this.userService.getUser(authUser.uid);
+        } else {
+          return of(null);
+        }
+      })
     );
   }
 }
