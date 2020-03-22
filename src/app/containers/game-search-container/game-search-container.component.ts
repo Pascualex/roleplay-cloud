@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LogService } from 'src/app/services/log.service';
+import { CustomValidators } from 'src/app/validators/CustomValidators';
 
 @Component({
   selector: 'app-game-search-container',
@@ -10,7 +11,7 @@ import { LogService } from 'src/app/services/log.service';
 })
 export class GameSearchContainerComponent implements OnInit {
 
-  public searched: boolean = false;
+  public attempted: boolean = false;
   public awaitingResponse: boolean = false;
   public invalidGameId: boolean = false;
 
@@ -18,7 +19,8 @@ export class GameSearchContainerComponent implements OnInit {
     gameId: new FormControl('', [
       Validators.required,
       Validators.minLength(20),
-      Validators.maxLength(20)
+      Validators.maxLength(20),
+      CustomValidators.noWhitespace
     ])
   });
 
@@ -31,7 +33,7 @@ export class GameSearchContainerComponent implements OnInit {
   ngOnInit(): void { }
 
   public async searchGame(): Promise<void> {
-    this.searched = true;
+    this.attempted = true;
     if (this.formControl.invalid) return;
     if (this.awaitingResponse || this.invalidGameId) return;
     this.awaitingResponse = true;

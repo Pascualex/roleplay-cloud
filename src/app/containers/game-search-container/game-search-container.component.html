@@ -1,13 +1,19 @@
 <app-image-card class="game-search-container">
-    <form class="search-form" [formGroup]="formControl" (ngSubmit)="searchGame()">
+    <form class="game-search-form" [formGroup]="formControl" (ngSubmit)="searchGame()">
         <input class="submit" type="submit" value="Submit" tabindex="-1">
         <div class="up">
             <h1 class="title">SEARCH A GAME BY ID</h1>
-            <p class="field-hint" *ngIf="formControl.get('gameId').valid || !searched">GAME ID</p>
-            <ng-container *ngIf="formControl.get('gameId').invalid && searched">
+            <p class="field-hint" *ngIf="formControl.get('gameId').valid || !attempted">GAME ID</p>
+            <ng-container *ngIf="formControl.get('gameId').invalid && attempted">
                 <p class="field-hint error" *ngIf="formControl.get('gameId').errors.required">GAME ID - FIELD REQUIRED</p>
                 <p class="field-hint error" *ngIf="formControl.get('gameId').errors.minlength">GAME ID - 20 CHARACTERS MINIMUM</p>
                 <p class="field-hint error" *ngIf="formControl.get('gameId').errors.maxlength">GAME ID - 20 CHARACTERS MAXIMUM</p>
+                <p class="field-hint error"
+                    *ngIf="
+                        formControl.get('gameId').errors.nowhitespace
+                        && !formControl.get('gameId').errors.minlength
+                        && !formControl.get('gameId').errors.maxlength
+                    ">GAME ID - NO WHITESPACE ALLOWED</p>
             </ng-container>
             <input class="input" type="email" formControlName="gameId">
         </div>

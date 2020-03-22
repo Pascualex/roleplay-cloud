@@ -22,6 +22,7 @@ import { SessionBarContainerComponent } from './containers/session-bar-container
 import { ImageCardComponent } from './components/image-card/image-card.component';
 import { LoginContainerComponent } from './containers/login-container/login-container.component';
 import { SignUpContainerComponent } from './containers/sign-up-container/sign-up-container.component';
+import { GameCreationContainerComponent } from './containers/game-creation-container/game-creation-container.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBcqC1jzBRzSyN7u6P8hG7RvmlI88gEM5M",
@@ -48,7 +49,8 @@ const firebaseConfig = {
     SessionBarContainerComponent,
     ImageCardComponent,
     LoginContainerComponent,
-    SignUpContainerComponent
+    SignUpContainerComponent,
+    GameCreationContainerComponent
   ],
   imports: [
     BrowserModule,

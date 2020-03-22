@@ -73,7 +73,7 @@ export class SignUpContainerComponent implements OnInit {
     const username: string = this.formControl.get('username').value;
     const password: string = this.formControl.get('password').value;
     
-    const user: User = new User(username);
+    const user: User = new User(username, null);
 
     const response: RegisterResponse = await this.authService.register(email, password, user);
 

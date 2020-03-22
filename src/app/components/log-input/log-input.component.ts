@@ -29,7 +29,7 @@ export class LogInputComponent implements OnInit {
     
     const message: string = this.formControl.get('message').value;
     
-    const entry: LogEntry = new LogEntry(message, LogEntryType.message);
+    const entry: LogEntry = new LogEntry(message, LogEntryType.message, null, null);
     this.sendMessageEvent.emit(entry);
 
     this.formControl.get('message').setValue('');
@@ -41,7 +41,7 @@ export class LogInputComponent implements OnInit {
     const result: number = Math.floor(Math.random() * faces) + 1;    
     const message: string = result + " / D" + faces;
 
-    const entry: LogEntry = new LogEntry(message, LogEntryType.roll);
+    const entry: LogEntry = new LogEntry(message, LogEntryType.roll, null, null);
     this.sendMessageEvent.emit(entry);
 
     this.rolling = false;

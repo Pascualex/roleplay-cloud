@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from '@angular/fire/firestore';
 import { Observable, of, combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Log } from 'src/app/models/Log';
@@ -23,12 +23,21 @@ export class LogService {
     const logDocument: AngularFirestoreDocument<any> = this.logsCollection.doc(id);
     return logDocument.valueChanges().pipe(
       // Transforms RawLog to Log
-      map((rawLog) => {
-        return new Log(rawLog.title, id);
+      switchMap((rawLog) => {
+        rawLog.id = id;
+        return this.rawLogToLog(rawLog);
       }),
       // Adds entries to the log
       switchMap((log: Log) => {
         return this.fetchEntriesToLog(log);
+      })
+    );
+  }
+
+  private rawLogToLog(rawLog): Observable<Log> {
+    return this.userService.getUser(rawLog.uid).pipe(
+      map((user: User) => {
+        return new Log(rawLog.title, user, rawLog.id, null);
       })
     );
   }
@@ -81,6 +90,16 @@ export class LogService {
           );
         });
       })
+    );
+  }
+
+  public createLog(log: Log): Promise<string> {
+    return this.logsCollection.add({
+      title: log.title,
+      uid: log.owner.uid
+    }).then(
+      (docRef: DocumentReference) => docRef.id,
+      _ => null
     );
   }
 

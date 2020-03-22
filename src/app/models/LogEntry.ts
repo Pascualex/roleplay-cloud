@@ -5,8 +5,8 @@ export class LogEntry {
   constructor(
     public message: string,
     public type: LogEntryType,
-    public timestamp: Date = null,
-    public author: User = null
+    public timestamp: Date,
+    public author: User
   ) { }
 };
 

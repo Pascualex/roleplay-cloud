@@ -14,7 +14,12 @@
                 <p class="field-hint error" *ngIf="formControl.get('username').errors.required">DISPLAYNAME - FIELD REQUIRED</p>
                 <p class="field-hint error" *ngIf="formControl.get('username').errors.minlength">DISPLAYNAME - 4 CHARACTERS MINIMUM</p>
                 <p class="field-hint error" *ngIf="formControl.get('username').errors.maxlength">DISPLAYNAME - 16 CHARACTERS MINIMUM</p>
-                <p class="field-hint error" *ngIf="formControl.get('username').errors.nowhitespace">DISPLAYNAME - NO WHITESPACE ALLOWED</p>
+                <p class="field-hint error"
+                    *ngIf="
+                        formControl.get('username').errors.nowhitespace
+                        && !formControl.get('username').errors.minlength
+                        && !formControl.get('username').errors.maxlength
+                    ">DISPLAYNAME - NO WHITESPACE ALLOWED</p>
             </ng-container>
             <input class="input" type="username" formControlName="username">
             <p class="field-hint" *ngIf="formControl.get('password').valid || !attempted">PASSWORD</p>

@@ -1,0 +1,19 @@
+<app-image-card class="game-creation-container">
+    <form class="game-creation-form" [formGroup]="formControl" (ngSubmit)="createGame()">
+        <input class="submit" type="submit" value="Submit" tabindex="-1">
+        <div class="up">
+            <h1 class="title">DIRECT YOUR OWN GAME</h1>
+            <p class="field-hint" *ngIf="formControl.get('title').valid || !attempted">ADVENTURE TITLE</p>
+            <ng-container *ngIf="formControl.get('title').invalid && attempted">
+                <p class="field-hint error" *ngIf="formControl.get('title').errors.required">ADVENTURE TITLE - FIELD REQUIRED</p>
+                <p class="field-hint error" *ngIf="formControl.get('title').errors.maxlength">ADVENTURE TITLE - 20 CHARACTERS MAXIMUM</p>
+            </ng-container>
+            <input class="input" type="text" formControlName="title">
+        </div>
+        <div class="down">
+            <p class="submit-hint" *ngIf="!awaitingResponse"><br/></p>
+            <p class="submit-hint" *ngIf="awaitingResponse">Creating game...</p>
+            <a class="submit-button" (click)="createGame()">Create</a>
+        </div>
+    </form>
+</app-image-card>

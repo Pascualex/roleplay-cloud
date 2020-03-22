@@ -21,7 +21,7 @@ export class LoginContainerComponent implements OnInit {
   public formControl: FormGroup = new FormGroup({
     email: new FormControl('', [
       Validators.required,
-      Validators.email
+      CustomValidators.email
     ]),
     password: new FormControl('', [
       Validators.required,
